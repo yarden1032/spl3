@@ -23,7 +23,9 @@ public class ActorThreadPool {
         acts = new WeakHashMap<>();
         playingNow = ConcurrentHashMap.newKeySet();
         actsRWLock = new ReentrantReadWriteLock();
+
     }
+
 
     public void submit(Object act, Runnable r) {
         synchronized (act) {
@@ -74,5 +76,10 @@ public class ActorThreadPool {
             }
         }
     }
+    //I ADDED
 
+
+    public Set<Object> getPlayingNow() {
+        return playingNow;
+    }
 }

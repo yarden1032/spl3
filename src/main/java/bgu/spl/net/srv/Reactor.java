@@ -53,6 +53,7 @@ public class Reactor<T> implements Server<T> {
                 selector.select();
                 runSelectionThreadTasks();
 
+
                 for (SelectionKey key : selector.selectedKeys()) {
 
                     if (!key.isValid()) {
@@ -130,4 +131,13 @@ public class Reactor<T> implements Server<T> {
         selector.close();
     }
 
+
+    //I ADDED
+    public ConcurrentLinkedQueue<Runnable> getSelectorTasks() {
+        return selectorTasks;
+    }
+
+    public ActorThreadPool getPool() {
+        return pool;
+    }
 }

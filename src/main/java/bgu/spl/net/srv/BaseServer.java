@@ -13,6 +13,7 @@ public abstract class BaseServer<T> implements Server<T> {
     private final Supplier<MessagingProtocol<T>> protocolFactory;
     private final Supplier<MessageEncoderDecoder<T>> encdecFactory;
     private ServerSocket sock;
+    protected   BlockingConnectionHandler<T> handler; //todo I ADDED THIS
 
     public BaseServer(
             int port,
@@ -23,6 +24,7 @@ public abstract class BaseServer<T> implements Server<T> {
         this.protocolFactory = protocolFactory;
         this.encdecFactory = encdecFactory;
 		this.sock = null;
+		this.handler=null;
     }
 
     @Override
@@ -41,7 +43,7 @@ public abstract class BaseServer<T> implements Server<T> {
                         clientSock,
                         encdecFactory.get(),
                         protocolFactory.get());
-
+                this.handler=handler;
                 execute(handler);
             }
         } catch (IOException ex) {
@@ -57,5 +59,6 @@ public abstract class BaseServer<T> implements Server<T> {
     }
 
     protected abstract void execute(BlockingConnectionHandler<T>  handler);
+
 
 }
